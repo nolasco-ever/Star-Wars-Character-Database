@@ -14,8 +14,12 @@ import{
 const client = new ApolloClient({
   cache: new InMemoryCache(),
   link: new HttpLink({
-    uri: "https://graphql.org/swapi-graphql"
-  })
+    uri: "https://graphql.org/swapi-graphql",
+    fetchOptions: {
+      mode: 'no-cors',
+      method: 'GET'
+    }
+  }),
 })
 
 ReactDOM.render(

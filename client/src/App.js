@@ -10,8 +10,16 @@ import YellowSun from './yellow_sun.svg';
 //import MUI
 import { DataGrid } from '@mui/x-data-grid';
 
+// This is the query I'm working with
+// The first errors I kept getting were:
+// "Preflight response is not successful", "Fetch API cannot load https://graphql.org/swapi-graphql due to access control checks.",
+// and "Failed to load resource: Preflight response is not successful"
+//
+//I searched the errors on stackoverflow and found it had to do with CORS, so then I went intp my index.js file and added fetchOptions
+//to the Http Link. I set mode to 'no-cors' and that error was gone, but i got a new error:
+// "JSON Parse error: Unexpected EOF"
 const ALL_PERSONS = gql`
-query {
+{
   allPeople {
     edges {
       node {
@@ -44,6 +52,7 @@ function App() {
     { field: 'species', headerName: 'Species', width: 145, headerClassName: 'super-app-theme--header', },
   ];
   
+  //Dummy data to fill the table in the meantime
   const rows = [
     { id: 1, name: 'Luke Skywalker', birthYear: '19BBY', gender: 'Male', homeworld: 'Tatooine', species: 'Human' },
     { id: 2, name: 'C-3PO', birthYear: '112BBY', gender: 'N/A', homeworld: 'Tatooinee', species: 'Droid' },
@@ -74,7 +83,7 @@ function App() {
     { id: 9, name: 'Han Solo', birthYear: '29BBY', gender: 'Male', homeworld: 'Corellia', species: 'Human' },
   ];
   
-
+  
   // if (loading){
   //   return (
   //     <div>
@@ -94,6 +103,7 @@ function App() {
   //   );
   // }
   // else{
+    console.log("DATA: " + data)
     return (
       <div className="App">
         <img id="title-logo" alt='title-logo' src={Title}/>
@@ -109,13 +119,9 @@ function App() {
             
           />
         </div>
-
-        <div>
-          {data}
-        </div>
       </div>
     );
-  // }
-}
+  }
+// }
 
 export default App;
